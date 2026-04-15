@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>श्री सिद्धी नैसर्गिक उपचार केंद्र | आयुर्वेदातून आरोग्याचा नवा मार्ग</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1B4332;
+            --secondary: #D4AF37;
+            --text-dark: #2D2D2D;
+            --light-bg: #F8F9FA;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Mukta', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--white); color: var(--text-dark); line-height: 1.6; }
+
+        /* --- Language Selection Screen --- */
+        #language-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(27, 67, 50, 0.98), rgba(27, 67, 50, 0.98)), url('ghar.png') no-repeat center center/cover;
+            z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; text-align: center;
+        }
+        .lang-btn {
+            padding: 15px 50px; border: 2px solid var(--secondary); background: transparent;
+            color: white; font-size: 1.2rem; cursor: pointer; border-radius: 50px; margin: 10px; transition: 0.3s; font-weight: 600;
+        }
+        .lang-btn:hover { background: var(--secondary); color: var(--primary); }
+
+        #main-content { display: none; }
+
+        header {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .logo-container { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .main-brand-name { font-size: 1.8rem; font-weight: 700; color: var(--primary); line-height: 1.2; margin-bottom: 5px; }
+        .logo-img { height: 45px; width: auto; }
+
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin: 0 15px; }
+        nav ul li a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; }
+        nav ul li a:hover { color: var(--primary); }
+
+        .btn-cta {
+            background: var(--primary);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .btn-cta:hover { background: var(--secondary); transform: scale(1.05); }
+
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('ghar.png') no-repeat center center/cover;
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 20px;
+        }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .hero-content p { font-size: 1.4rem; margin-bottom: 30px; }
+        .hero-features { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+        .hero-features span { background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; }
+
+        .section-padding { padding: 80px 10%; }
+        .about-box { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .about-text h2 { color: var(--primary); font-size: 2.2rem; margin-bottom: 20px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .service-card { background: var(--light-bg); padding: 40px 25px; text-align: center; border-radius: 20px; transition: 0.4s; }
+        .service-card:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .service-card img { height: 80px; margin-bottom: 20px; }
+
+        .expert-card { background: white; border: 1px solid #eee; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .expert-card h4 { color: var(--primary); font-size: 1.4rem; margin-bottom: 5px; }
+        .expert-card span { color: var(--secondary); font-weight: 700; display: block; margin-bottom: 10px; }
+
+        .why-us { background: var(--primary); color: white; }
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; }
+        .why-item i { font-size: 2rem; color: var(--secondary); margin-bottom: 10px; }
+
+        #reviews { background: #fff; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
+        .review-card { background: var(--light-bg); padding: 30px; border-radius: 20px; border: 1px solid #eee; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; }
+        .review-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); background: #fff; }
+        .review-card i.fa-quote-left { color: var(--secondary); font-size: 1.5rem; margin-bottom: 15px; display: block; }
+        .review-text { font-style: italic; color: #444; margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6; }
+        .reviewer-name { color: var(--primary); font-weight: 700; margin-bottom: 5px; display: block; }
+        .stars { color: #FFD700; font-size: 0.8rem; }
+
+        footer { background: #111; color: white; padding: 60px 10% 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .thanks-img { width: 150px; margin-bottom: 20px; filter: brightness(0) invert(1); }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+        @media (max-width: 768px) {
+            .about-box { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.2rem; }
+            nav { display: none; }
+            .main-brand-name { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="language-screen">
+        <h1 id="splash-h1" style="margin-bottom: 10px;">श्री सिद्धी नैसर्गिक उपचार केंद्र</h1>
+        <p id="splash-p" style="margin-bottom: 30px; color: var(--secondary);">तुमची भाषा निवडा / Select Your Language</p>
+        <div class="lang-btns">
+            <button class="lang-btn" onclick="setLanguage('mr')">मराठी</button>
+            <button class="lang-btn" onclick="setLanguage('en')">English</button>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <div class="logo-container">
+                <div class="main-brand-name" id="nav-brand">श्री सिद्धी नैसर्गिक उपचार केंद्र</div>
+                <img src="namste.png" alt="namste" class="logo-img">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" id="m-home">Home</a></li>
+                    <li><a href="#about" id="m-about">About</a></li>
+                    <li><a href="#services" id="m-services">Services</a></li>
+                    <li><a href="#experts" id="m-experts">Experts</a></li>
+                    <li><a href="#reviews" id="m-reviews">Reviews</a></li>
+                    <li><a href="#contact" id="m-contact">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="tel:8805280923" class="btn-cta" id="nav-call">Call Now</a>
+        </header>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1 id="hero-h1">नैसर्गिक उपचारातून संपूर्ण आरोग्य</h1>
+                <p id="hero-p">५०+ वर्षांचा अनुभव • ७५,०००+ रुग्णांचा विश्वास</p>
+                
+                <p id="hero-appt-note" style="background: rgba(212, 175, 55, 0.2); display: inline-block; padding: 5px 15px; border-radius: 5px; color: var(--secondary); font-weight: 600; margin-bottom: 20px;">
+                    <i class="fas fa-calendar-check"></i> कृपया अपॉइंटमेंट घेऊनच यावे.
+                </p>
+
+                <div class="hero-features" id="hero-feat">
+                    <span id="f1"><i class="fas fa-check"></i> 100% नैसर्गिक उपचार</span>
+                    <span id="f2"><i class="fas fa-check"></i> कोणतेही साइड इफेक्ट्स नाहीत</span>
+                    <span id="f3"><i class="fas fa-check"></i> अनुभवी तज्ञ</span>
+                </div>
+                
+                <a href="https://wa.me/918805280923?text=नमस्कार, मला अपॉइंटमेंट कन्फर्म करायची आहे किंवा उपचारांबद्दल अधिक माहिती हवी आहे." 
+                   class="btn-cta" style="padding: 15px 40px; background: var(--secondary); color: #000;" id="hero-btn">
+                    Appointment बुक करा
+                </a>
+            </div>
+        </section>
+
+        <section class="section-padding" id="about">
+            <div class="about-box">
+                <div class="about-text">
+                    <h2 id="ab-h2">आमच्याबद्दल (About Us)</h2>
+                    <p id="ab-p1"><strong>श्री सिद्धी नैसर्गिक उपचार केंद्र</strong> हे केंद्र 2013 मध्ये सुरू झाले असून हे पूर्णपणे परिवाराद्वारे चालवले जाते. आमचा मुख्य फोकस Detox आणि आयुर्वेदिक उपचारांवर आहे.</p>
+                    <p id="ab-p2">कोणतीही जाहिरात न आता, फक्त लोकांच्या विश्वासावर आम्ही ७५,००० हून अधिक रुग्ण पूर्णपणे बरे केले आहेत.</p>
+                    <img src="thanks.png" alt="Thanks" style="width: 120px; margin-top: 20px;">
+                </div>
+                <div class="expert-card" style="background: var(--light-bg);">
+                    <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--secondary);"></i>
+                    <p id="ab-quote" style="font-style: italic; margin-top: 15px;">"आमचा विश्वास फक्त नैसर्गिक उपचार पद्धतीवर आहे, ज्यामुळे शरीराला कोणतेही नुकसान न होता आजार मुळापासून बरा होतो."</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding why-us">
+            <div class="why-grid">
+                <div class="why-item"><i class="fas fa-history"></i><h3 id="w-exp-h">50+ Years</h3><p id="w-exp">Experience</p></div>
+                <div class="why-item"><i class="fas fa-users"></i><h3 id="w-pat-h">75,000+</h3><p id="w-pat">Happy Patients</p></div>
+                <div class="why-item"><i class="fas fa-leaf"></i><h3 id="w-side-h">100% Natural</h3><p id="w-side">No Side Effects</p></div>
+                <div class="why-item"><i class="fas fa-peace"></i><h3 id="w-env-t">Peaceful</h3><p id="w-env-s">Environment</p></div>
+            </div>
+        </section>
+
+        <section class="section-padding" id="services">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 style="color: var(--primary); font-size: 2.5rem;" id="ser-h2">आमच्या सेवा (Our Services)</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="panchakarma.png" alt="P">
+                    <h3 id="s1-t">Panchkarma</h3>
+                    <p id="s1-p">शरीरातील विषारी द्रव्ये काढून टाकण्यासाठी आणि शरीर संतुलित ठेवण्यासाठी पंचकर्म उपचार.</p>
+                </div>
+                <div class="service-card">
+                    <img src="detox.png" alt="D">
+                    <h3 id="s2-t">Detox Therapy</h3>
+                    <p id="s2-p">रोगांपासून मुक्ती मिळवण्यासाठी शरीरातील टॉक्सिन्स नैसर्गिकरित्या काढून टाकले जातात.</p>
+                </div>
+                <div class="service-card">
+                    <img src="naturopathy.png" alt="N">
+                    <h3 id="s3-t">Naturopathy</h3>
+                    <p id="s3-p">निसर्गाच्या सानिध्यात राहून नैसर्गिक घटकांद्वारे केली जाणारी उपचार पद्धती.</p>
+                </div>
+                <div class="service-card">
+                    <img src="yoga.png" alt="Y">
+                    <h3 id="s4-t">Meditation</h3>
+                    <p id="s4-p">मानसिक शांतता, तणावमुक्ती आणि मन स्थिर ठेवण्यासाठी विशेष सत्रे.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" id="experts" style="background: var(--light-bg);">
+            <h2 style="text-align: center; color: var(--primary); margin-bottom: 50px;" id="ex-h2">आमचे तज्ञ (Our Experts)</h2>
+            <div class="services-grid">
+                <div class="expert-card">
+                    <h4 id="ex1-name">श्री शंकर गोळे</h4>
+                    <span id="ex1-s">निसर्गोपचार तज्ञ</span>
+                    <p id="ex1-p">५०+ वर्षांचा दांडगा अनुभव</p>
+                </div>
+                <div class="expert-card">
+                    <h4 id="ex2-name">दीपाली गोळे</h4>
+                    <span id="ex2-s">आयुर्वेदिक आणि निसर्गोपचार तज्ञ</span>
+                    <p id="ex2-p">पनवेल स्पेशालिस्ट | २०+ वर्षांचा अनुभव</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" id="reviews">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="color: var(--primary); font-size: 2.5rem;" id="rev-h2">रुग्णांचे अनुभव (Reviews)</h2>
+                <p id="rev-sub">आमच्या उपचारांनी मिळालेली आरोग्यदायी सुटका</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="review-text" id="rev1-t">"गेल्या अनेक वर्षांपासून मला गुडघेदुखीचा त्रास होता, पण श्री सिद्धी केंद्रामध्ये उपचार घेतल्यावर मला खूप आराम मिळाला. नैसर्गिक उपचार खरोखरच सर्वोत्तम आहेत."</p>
+                    <span class="reviewer-name" id="rev1-n">सुनिल मोरे</span>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+                <div class="review-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="review-text" id="rev2-t">"डिटॉक्स थेरपीमुळे माझ्या शरीरातील जडपणा कमी झाला आणि मला खूप फ्रेश वाटत आहे. इथले तज्ञ खूप छान मार्गदर्शन करतात."</p>
+                    <span class="reviewer-name" id="rev2-n">अनिता देशपांडे</span>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+                <div class="review-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="review-text" id="rev3-t">"कोणतेही साईड इफेक्ट्स नसलेले उपचार शोधत असाल तर हे केंद्र सर्वोत्तम आहे. ७५,००० रुग्णांचा विश्वास सार्थ आहे!"</p>
+                    <span class="reviewer-name" id="rev3-n">राजेश पाटील</span>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact">
+            <div class="footer-grid">
+                <div>
+                    <img src="thanks.png" alt="Thanks" class="thanks-img">
+                    <h3 id="f-title">श्री सिद्धी केंद्र</h3>
+                    <p id="f-tag">आयुर्वेदातून आरोग्याचा नवा मार्ग</p>
+                </div>
+                <div>
+                    <h4 id="f-l1-t">मुख्य केंद्र (सातारा)</h4>
+                    <p id="f-l1-a">मु. भोगवली, पो. हातगेघर, तालुका जावळी, जिल्हा सातारा - ४१५५१४</p>
+                    <p><i class="fas fa-phone"></i> 8805280923</p>
+                    <p style="margin-top:10px;"><strong id="f-mgr-l">मॅनेजर:</strong> <span id="f-mgr-n">श्री संदीप गोळे - 9594331089</span></p>
+                </div>
+                <div>
+                    <h4 id="f-l2-t">पनवेल क्लिनिक</h4>
+                    <p id="f-l2-a">नेरे, महालक्ष्मी नगर, पनवेल</p>
+                    <p><i class="fas fa-phone"></i> 9594331089</p>
+                </div>
+                <div>
+                    <h4 id="f-social">ईमेल & सोशल</h4>
+                    <p>siddhigole99@gmail.com</p>
+                    <div style="margin-top: 15px; font-size: 1.5rem;">
+                        <i class="fab fa-facebook" style="margin-right: 15px;"></i>
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 50px; opacity: 0.5;" id="f-copy">© 2026 श्री सिद्धी नैसर्गिक उपचार केंद्र | All Rights Reserved.</p>
+        </footer>
+
+        <a href="https://wa.me/918805280923?text=नमस्कार, मला अपॉइंटमेंट कन्फर्म करायची आहे किंवा उपचारांबद्दल अधिक माहिती हवी आहे." class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <script>
+        const translations = {
+            'mr': {
+                'nav-brand': 'श्री सिद्धी नैसर्गिक उपचार केंद्र',
+                'm-home': 'होम', 'm-about': 'आमच्याबद्दल', 'm-services': 'सेवा', 'm-experts': 'तज्ञ', 'm-contact': 'संपर्क', 'm-reviews': 'अनुभव',
+                'nav-call': 'कॉल करा',
+                'hero-h1': 'नैसर्गिक उपचारातून संपूर्ण आरोग्य',
+                'hero-p': '५०+ वर्षांचा अनुभव • ७५,०००+ रुग्णांचा विश्वास',
+                'hero-appt-note': 'कृपया अपॉइंटमेंट घेऊनच यावे.',
+                'f1': '100% नैसर्गिक उपचार', 'f2': 'कोणतेही साइड इफेक्ट्स नाहीत', 'f3': 'अनुभवी तज्ञ',
+                'hero-btn': 'Appointment बुक करा',
+                'ab-h2': 'आमच्याबद्दल (About Us)',
+                'ab-p1': 'श्री सिद्धी नैसर्गिक उपचार केंद्र हे केंद्र 2013 मध्ये सुरू झाले असून हे पूर्णपणे परिवाराद्वारे चालवले जाते. आमचा मुख्य फोकस Detox आणि आयुर्वेदिक उपचारांवर आहे.',
+                'ab-p2': 'कोणतीही जाहिरात न करता, फक्त लोकांच्या विश्वासावर आम्ही ७५,००० हून अधिक रुग्ण पूर्णपणे बरे केले आहेत.',
+                'ab-quote': '"आमचा विश्वास फक्त नैसर्गिक उपचार पद्धतीवर आहे, ज्यामुळे शरीराला कोणतेही नुकसान न होता आजार मुळापासून बरा होतो."',
+                'w-exp-h': '५०+ वर्षे', 'w-exp': 'अनुभव', 'w-pat-h': '७५,०००+', 'w-pat': 'आनंदी रुग्ण', 'w-side-h': '१००% नैसर्गिक', 'w-side': 'कोणतेही साइड इफेक्ट्स नाहीत', 'w-env-t': 'शांत', 'w-env-s': 'वातावरण',
+                'ser-h2': 'आमच्या सेवा (Our Services)',
+                's1-t': 'पंचकर्म', 's1-p': 'शरीरातील विषारी द्रव्ये काढून टाकण्यासाठी आणि शरीर संतुलित ठेवण्यासाठी पंचकर्म उपचार.',
+                's2-t': 'डिटॉक्स थेरपी', 's2-p': 'रोगांपासून मुक्ती मिळवण्यासाठी शरीरातील टॉक्सिन्स नैसर्गिकरित्या काढून टाकले जातात.',
+                's3-t': 'निसर्गोपचार', 's3-p': 'निसर्गाच्या सानिध्यात राहून नैसर्गिक घटकांद्वारे केली जाणारी उपचार पद्धती.',
+                's4-t': 'ध्यानधारणा', 's4-p': 'मानसिक शांतता, तणावमुक्ती आणि मन स्थिर ठेवण्यासाठी विशेष सत्रे.',
+                'ex-h2': 'आमचे तज्ञ (Our Experts)',
+                'ex1-name': 'श्री शंकर गोळे', 'ex1-s': 'निसर्गोपचार तज्ञ', 'ex1-p': '५०+ वर्षांचा दांडगा अनुभव',
+                'ex2-name': 'दीपाली गोळे', 'ex2-s': 'आयुर्वेदिक आणि निसर्गोपचार तज्ञ', 'ex2-p': 'पनवेल स्पेशालिस्ट | २०+ वर्षांचा अनुभव',
+                'rev-h2': 'रुग्णांचे अनुभव (Reviews)',
+                'rev-sub': 'आमच्या उपचारांनी मिळालेली आरोग्यदायी सुटका',
+                'rev1-t': '"गेल्या अनेक वर्षांपासून मला गुडघेदुखीचा त्रास होता, पण श्री सिद्धी केंद्रामध्ये उपचार घेतल्यावर मला खूप आराम मिळाला. नैसर्गिक उपचार खरोखरच सर्वोत्तम आहेत."',
+                'rev1-n': 'सुनिल मोरे',
+                'rev2-t': '"डिटॉक्स थेरपीमुळे माझ्या शरीरातील जडपणा कमी झाला आणि मला खूप फ्रेश वाटत आहे. इथले तज्ञ खूप छान मार्गदर्शन करतात."',
+                'rev2-n': 'अनिता देशपांडे',
+                'rev3-t': '"कोणतेही साईड इफेक्ट्स नसलेले उपचार शोधत असाल तर हे केंद्र सर्वोत्तम आहे. ७५,००० रुग्णांचा विश्वास सार्थ आहे!"',
+                'rev3-n': 'राजेश पाटील',
+                'f-title': 'श्री सिद्धी केंद्र', 'f-tag': 'आयुर्वेदातून आरोग्याचा नवा मार्ग',
+                'f-l1-t': 'मुख्य केंद्र (सातारा)', 'f-l1-a': 'मु. भोगवली, पो. हातगेघर, तालुका जावळी, जिल्हा सातारा - ४१५५१४',
+                'f-l2-t': 'पनवेल क्लिनिक', 'f-l2-a': 'नेरे, महालक्ष्मी नगर, पनवेल',
+                'f-mgr-l': 'मॅनेजर:', 'f-mgr-n': 'श्री संदीप गोळे - 9594331089',
+                'f-social': 'ईमेल & सोशल', 'f-copy': '© 2026 श्री सिद्धी नैसर्गिक उपचार केंद्र | All Rights Reserved.'
+            },
+            'en': {
+                'nav-brand': 'Shree Siddhi Wellness Center',
+                'm-home': 'Home', 'm-about': 'About', 'm-services': 'Services', 'm-experts': 'Experts', 'm-contact': 'Contact', 'm-reviews': 'Reviews',
+                'nav-call': 'Call Now',
+                'hero-h1': 'Complete Health Through Natural Care',
+                'hero-p': '50+ Years Experience • 75,000+ Trusted Patients',
+                'hero-appt-note': 'Please visit by appointment only.',
+                'f1': '100% Natural Treatment', 'f2': 'No Side Effects', 'f3': 'Experienced Experts',
+                'hero-btn': 'Book Appointment',
+                'ab-h2': 'About Us',
+                'ab-p1': 'Shree Siddhi Natural Treatment Center was established in 2013 and is a completely family-run initiative. Our core focus is on Detox and Ayurvedic treatments.',
+                'ab-p2': 'With zero advertising and purely through patient trust, we have successfully treated over 75,000 people.',
+                'ab-quote': '"We believe only in natural treatment methods, ensuring the root cause is treated without any harm to the body."',
+                'w-exp-h': '50+ Years', 'w-exp': 'Experience', 'w-pat-h': '75,000+', 'w-pat': 'Happy Patients', 'w-side-h': '100% Natural', 'w-side': 'No Side Effects', 'w-env-t': 'Peaceful', 'w-env-s': 'Environment',
+                'ser-h2': 'Our Services',
+                's1-t': 'Panchkarma', 's1-p': 'Panchkarma treatments to eliminate bodily toxins and maintain internal balance.',
+                's2-t': 'Detox Therapy', 's2-p': 'Toxins are naturally flushed out from the body to ensure freedom from chronic diseases.',
+                's3-t': 'Naturopathy', 's3-p': 'A holistic healing method performed using natural elements in the lap of nature.',
+                's4-t': 'Meditation', 's4-p': 'Special sessions designed for mental peace, stress relief, and mindfulness.',
+                'ex-h2': 'Our Experts',
+                'ex1-name': 'Shree Shankar Gole', 'ex1-s': 'Naturopathy Expert', 'ex1-p': '50+ Years of Vast Experience',
+                'ex2-name': 'Deepali Gole', 'ex2-s': 'Ayurvedic & Naturopathy Expert', 'ex2-p': 'Panvel Specialist | 20+ Years of Experience',
+                'rev-h2': 'Patient Testimonials',
+                'rev-sub': 'Healthy outcomes through our specialized care',
+                'rev1-t': '"I had chronic knee pain for years. After treatment at Shree Siddhi Center, I feel much better. Natural healing is truly the best!"',
+                'rev1-n': 'Sunil More',
+                'rev2-t': '"Detox therapy reduced my body heaviness and I feel very fresh now. The experts here provide excellent guidance."',
+                'rev2-n': 'Anita Deshpande',
+                'rev3-t': '"If you are looking for treatments without side effects, this center is the best. Trusted by 75,000 patients!"',
+                'rev3-n': 'Rajesh Patil',
+                'f-title': 'Shree Siddhi Center', 'f-tag': 'A New Path to Health via Ayurveda',
+                'f-l1-t': 'Main Center (Satara)', 'f-l1-a': 'At Bhogawali, Post Hatgeghar, Taluka Jaoli, Dist Satara – 415514',
+                'f-l2-t': 'Panvel Clinic', 'f-l2-a': 'Nere, Mahalaxmi Nagar, Panvel',
+                'f-mgr-l': 'Manager:', 'f-mgr-n': 'Shree Sandeep Gole - 9594331089',
+                'f-social': 'Email & Social', 'f-copy': '© 2026 Shree Siddhi Wellness Center | All Rights Reserved.'
+            }
+        };
+
+        function setLanguage(lang) {
+            const data = translations[lang];
+            for (let id in data) {
+                const element = document.getElementById(id);
+                if (element) {
+                    const icon = element.querySelector('i');
+                    if (icon) {
+                        const iconHtml = icon.outerHTML;
+                        element.innerHTML = iconHtml + ' ' + data[id];
+                    } else {
+                        element.innerText = data[id];
+                    }
+                }
+            }
+            document.getElementById('language-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+</html>
